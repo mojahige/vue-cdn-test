@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test the CDN version of Vue.js</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/stylesheets/styles.css" />
+    <style>
+      [v-cloak] {
+        visibility: hidden;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+        }
+      }
+    </script>
+    <script type="module">
+      import { start as startIntersectionObserver } from "/javascripts/intersection-observer.js";
+      import { start as startMutationObserver } from "/javascripts/mutation-observer.js";
+      import { mount } from "/javascripts/mount.js";
+
+      const intersectionObserver = startIntersectionObserver({
+        selector: "[data-auto-load-url]",
+        /**
+         * @param {IntersectionObserverEntry[]} entries
+         */
+        callback(entries) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              mount(entry.target);
+            }
+          });
+        },
+      });
+
+      const mutationObserver = startMutationObserver({
+        root: document.body,
+        subtree: true,
+        childList: true,
+        attributes: true,
+        attributeFilter: ["data-auto-load-url"],
+        /**
+         * @param {MutationRecord[]} mutations
+         */
+        callback(mutations) {
+          for (const mutation of mutations) {
+            if (mutation.attributeName === "data-auto-load-url") {
+              mount(mutation.target);
+            }
+
+            if (mutation.type === "childList") {
+              mutation.addedNodes.forEach((node) => {
+                if (node.dataset?.autoLoadUrl) {
+                  mount(node);
+                }
+              });
+            }
+          }
+        },
+      });
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>
+        Test the CDN version of Vue.js<br />
+        <span v-cloak data-auto-load-url="/javascripts/hello.js">
+          {{ message }}
+        </span>
+      </h1>
+
+      <div data-auto-load-url="/javascripts/counter.js">
+        <p>
+          Count is:
+          <span v-cloak v-bind:style="numberStyle" ref="valueElement">
+            {{ count }}
+          </span>
+        </p>
+        <button @click="increment">Increment</button>
+        <button @click="decrement">Decrement</button>
+      </div>
+
+      <div data-auto-load-url="/javascripts/counter.js">
+        <p>Count is: <span v-cloak>{{ count }}</span></p>
+        <button @click="increment">Increment</button>
+        <button @click="decrement">Decrement</button>
+      </div>
+
+      <template id="counter-template">
+        <div data-auto-load-url="/javascripts/counter.js">
+          <p>
+            Count is:
+            <span v-cloak v-bind:style="numberStyle" ref="valueElement">
+              {{ count }}
+            </span>
+          </p>
+          <button @click="increment">Increment</button>
+          <button @click="decrement">Decrement</button>
+        </div>
+      </template>
+    </main>
+  </body>
+</html>

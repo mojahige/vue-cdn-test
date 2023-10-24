@@ -1,0 +1,30 @@
+{
+  "name": "vue-cdn-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "biome format --write . & prettier --cache --write '**/*.{css,html}'",
+    "lint:css": "stylelint --cache '**/*.css'",
+    "lint:css:fix": "stylelint --cache --fix '**/*.css'",
+    "lint:javascript": "biome lint './src'",
+    "lint:javascript:fix": "biome lint --apply './src'",
+    "lint:html": "markuplint 'src/**/*.html'",
+    "lint:html:fix": "markuplint --fix 'src/**/*.html'",
+    "serve": "browser-sync start --server 'src' --files 'src'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "1.3.1",
+    "@vue/tsconfig": "^0.4.0",
+    "browser-sync": "^2.29.3",
+    "markuplint": "^3.14.0",
+    "prettier": "^3.0.3",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard": "^34.0.0",
+    "typescript": "^5.2.2",
+    "vue": "^3.3.6"
+  }
+}
