@@ -9,11 +9,6 @@ import { createApp } from "vue";
  */
 export async function mount(target) {
   const source = target.dataset.autoLoadUrl;
-  const loaded = target.dataset.autoLoaded === "true";
-
-  if (loaded) {
-    return;
-  }
 
   if (!source) {
     console.error('"data-auto-load-path" attribute is not defined.', {
@@ -37,6 +32,5 @@ export async function mount(target) {
 
   if (options) {
     createApp(options).mount(target);
-    target.dataset.autoLoaded = "true";
   }
 }
