@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "packageManager": "yarn@4.0.0",
   "scripts": {
     "format": "biome format --write . & prettier --cache --write '**/*.{css,html}'",
     "lint:css": "stylelint --cache '**/*.css'",

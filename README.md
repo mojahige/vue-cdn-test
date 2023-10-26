@@ -6,23 +6,23 @@ Use the CDN version of Vue.js without Single File Components.
 
 ```
 # install packages
-npm install
+yarn install
 
 # start preview server
-npm run serve
+yarn serve
 ```
 
 ### Other scripts
 
 ```
 # format
-npm run format
+yarn format
 
 # lint
-npm run lint:css
-npm run lint:css:fix
-npm run lint:javascript
-npm run lint:javascript:fix
-npm run lint:html
-npm run lint:html:fix
+yarn lint:css
+yarn lint:css:fix
+yarn lint:javascript
+yarn lint:javascript:fix
+yarn lint:html
+yarn lint:html:fix
 ```
